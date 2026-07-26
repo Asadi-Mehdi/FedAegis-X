@@ -1,0 +1,23 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "FedAegis-X"
+version = "0.1.0-alpha"
+description = "Lightweight Federated Learning Framework for Intrusion Detection Research"
+readme = "README.md"
+requires-python = ">=3.10"
+
+dependencies = [
+    "numpy>=1.26.0",
+    "pandas>=2.2.0",
+    "scikit-learn>=1.5.0",
+    "PyYAML>=6.0.1",
+    "matplotlib>=3.9.0"
+]
+
+[tool.pytest.ini_options]
+pythonpath = [
+    "src"
+]
