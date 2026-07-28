@@ -70,6 +70,9 @@ for c in clients:
 
 from fedaegis.aggregation.fedavg import FedAvgAggregator
 from fedaegis.core.server import Server
+from fedaegis.core.history import History
+from fedaegis.core.trainer import FederatedTrainer
+from fedaegis.outputs.writer import ResultWriter
 
 aggregator = FedAvgAggregator()
 
@@ -77,14 +80,48 @@ server = Server(
     aggregator
 )
 
-global_parameters = server.aggregate(
-    updates
+history = History()
+
+trainer = FederatedTrainer(
+
+    clients=clients,
+
+    server=server,
+
+    history=history,
+
+    rounds=cfg["federated"]["rounds"]
+
+)
+
+global_model = trainer.fit(
+
+    X_test,
+
+    y_test
+
+)
+
+writer = ResultWriter(
+
+    cfg["output"]["directory"]
+
+)
+
+writer.save_metrics(
+    history
+)
+
+history.save_json(
+
+    "outputs/history.json"
+
 )
 
 print()
 
-print("Federated Round Finished")
+print("=" * 40)
 
-print()
+print("Training Finished")
 
-print(global_parameters.keys())
+print("=" * 40)
