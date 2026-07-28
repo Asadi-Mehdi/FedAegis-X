@@ -1,0 +1,17 @@
+experiment:
+  name: "FedAegis-X-v0.1"
+
+dataset:
+  name: "iris"
+  test_size: 0.2
+  random_state: 42
+
+federated:
+  clients: 5
+  rounds: 3
+
+model:
+  type: "logistic_regression"
+
+output:
+  directory: "outputs"
