@@ -32,3 +32,27 @@ print(f"Test Samples  : {len(X_test)}")
 print(f"Features      : {X_train.shape[1]}")
 
 print(f"Classes       : {len(set(y_train))}")
+
+from fedaegis.client import Client
+from fedaegis.models.logistic import LogisticModel
+from fedaegis.metrics.classification import evaluate
+
+model = LogisticModel()
+
+client = Client(
+    0,
+    model,
+    X_train,
+    y_train
+)
+
+client.train()
+
+pred = client.predict(X_test)
+
+metrics = evaluate(
+    y_test,
+    pred
+)
+
+print(metrics)
