@@ -6,20 +6,32 @@ from .base import BaseAggregator
 
 class FedAvgAggregator(BaseAggregator):
 
-    def aggregate(self, client_parameters):
+    def aggregate(
 
-        global_model = copy.deepcopy(client_parameters[0])
+            self,
 
-        for key in global_model:
+            client_updates):
 
-            tensors = [
-                c[key]
-                for c in client_parameters
-            ]
+        global_model = copy.deepcopy(
+
+            client_updates[0]
+
+        )
+
+        for key in global_model.keys():
 
             global_model[key] = np.mean(
-                tensors,
+
+                [
+
+                    update[key]
+
+                    for update in client_updates
+
+                ],
+
                 axis=0
+
             )
 
         return global_model
