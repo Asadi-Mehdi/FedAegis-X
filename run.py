@@ -37,22 +37,54 @@ from fedaegis.client import Client
 from fedaegis.models.logistic import LogisticModel
 from fedaegis.metrics.classification import evaluate
 
-model = LogisticModel()
+from fedaegis.data.partition import iid_partition
 
-client = Client(
-    0,
-    model,
+parts = iid_partition(
     X_train,
-    y_train
+    y_train,
+    cfg["federated"]["clients"]
 )
 
-client.train()
+clients = []
 
-pred = client.predict(X_test)
+for idx, (x, y) in enumerate(parts):
 
-metrics = evaluate(
-    y_test,
-    pred
+    model = LogisticModel()
+
+    client = Client(
+        idx,
+        model,
+        x,
+        y
+    )
+
+    clients.append(client)
+
+updates = []
+
+for c in clients:
+
+    updates.append(
+        c.train()
+    )
+
+from fedaegis.aggregation.fedavg import FedAvgAggregator
+from fedaegis.core.server import Server
+
+aggregator = FedAvgAggregator()
+
+server = Server(
+    aggregator
 )
 
-print(metrics)
+global_parameters = server.aggregate(
+    updates
+)
+
+print()
+
+print("Federated Round Finished")
+
+print()
+
+print(global_parameters.keys())
