@@ -1,16 +1,26 @@
-from fedaegis import __version__
+from fedaegis.config import Config
+from fedaegis.data.iris_loader import IrisLoader
 
 
-def main():
+cfg = Config()
 
-    print("=" * 45)
-    print(f"FedAegis-X {__version__}")
-    print("=" * 45)
+loader = IrisLoader(
+    test_size=cfg["dataset"]["test_size"],
+    random_state=cfg["dataset"]["random_state"]
+)
 
-    print("Framework Status : READY")
-    print("Execution Stage  : Bootstrap")
-    print("Next Stage       : Dataset Loader")
+X_train, X_test, y_train, y_test = loader.load()
 
+print("=" * 45)
+print("FedAegis-X")
+print("=" * 45)
 
-if __name__ == "__main__":
-    main()
+print("Dataset Loaded")
+
+print(f"Train Samples : {len(X_train)}")
+
+print(f"Test Samples  : {len(X_test)}")
+
+print(f"Features      : {X_train.shape[1]}")
+
+print(f"Classes       : {len(set(y_train))}")
