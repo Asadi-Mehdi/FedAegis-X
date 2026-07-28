@@ -1,3 +1,11 @@
+from pathlib import Path
+import sys
+
+ROOT = Path(__file__).resolve().parent
+
+SRC = ROOT / "src"
+
+sys.path.insert(0, str(SRC))
 from fedaegis.config import Config
 from fedaegis.data.iris_loader import IrisLoader
 
