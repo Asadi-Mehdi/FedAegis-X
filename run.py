@@ -38,10 +38,22 @@ from fedaegis.metrics.classification import evaluate
 
 from fedaegis.data.partition import iid_partition
 
-parts = iid_partition(
+from fedaegis.data.noniid import DirichletPartitioner
+
+partitioner = DirichletPartitioner(
+
+    alpha=cfg["federation"]["partition"]["alpha"]
+
+)
+
+parts = partitioner.split(
+
     X_train,
+
     y_train,
-    cfg["federated"]["clients"]
+
+    cfg["federation"]["clients"]
+
 )
 
 clients = []
@@ -80,7 +92,13 @@ from fedaegis.core.history import History
 from fedaegis.core.trainer import FederatedTrainer
 from fedaegis.outputs.writer import ResultWriter
 
-aggregator = FedAvgAggregator()
+from fedaegis.core.aggregation_factory import AggregationFactory
+
+aggregator = AggregationFactory.create(
+
+    cfg["federation"]["aggregation"]["type"]
+
+)
 
 server = Server(
     aggregator
