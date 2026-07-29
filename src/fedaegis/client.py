@@ -19,8 +19,17 @@ class Client:
             self.y
         )
 
-        return self.model.get_parameters()
+return {
 
+    "params":
+
+        self.model.get_parameters(),
+
+    "samples":
+
+        len(self.X)
+
+}
     def update_global_model(
             self,
             global_parameters):
