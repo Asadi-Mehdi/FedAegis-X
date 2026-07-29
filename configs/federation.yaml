@@ -1,0 +1,15 @@
+federation:
+
+  clients: 5
+
+  rounds: 5
+
+  partition:
+
+    type: noniid
+
+    alpha: 0.5
+
+  aggregation:
+
+    type: weighted_fedavg
