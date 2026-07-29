@@ -12,10 +12,9 @@ from fedaegis.data.iris_loader import IrisLoader
 
 cfg = Config()
 
-loader = IrisLoader(
-    test_size=cfg["dataset"]["test_size"],
-    random_state=cfg["dataset"]["random_state"]
-)
+from fedaegis.data.dataset_factory import DatasetFactory
+
+loader = DatasetFactory.create(cfg)
 
 X_train, X_test, y_train, y_test = loader.load()
 
@@ -47,9 +46,16 @@ parts = iid_partition(
 
 clients = []
 
+from fedaegis.models.model_factory import ModelFactory
+
+
 for idx, (x, y) in enumerate(parts):
 
-    model = LogisticModel()
+    model = ModelFactory.create(
+
+    cfg["model"]["type"]
+
+)
 
     client = Client(
         idx,
