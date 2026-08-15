@@ -9,7 +9,7 @@ dataset:
 federated:
   clients: 5
   rounds: 3
- aggregation:
+  aggregation:
     type: "dynamic_cost"
 
 model:
