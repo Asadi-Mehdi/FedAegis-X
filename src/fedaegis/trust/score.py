@@ -6,8 +6,26 @@ class TrustNormalizer:
     @staticmethod
     def normalize(scores):
 
-        scores = np.array(scores, dtype=float)
+        values = np.asarray(
+            scores,
+            dtype=float
+        )
 
-        scores = scores / scores.sum()
+        if values.size == 0:
+            raise ValueError(
+                "No reliability scores."
+            )
 
-        return scores
+        values = np.maximum(
+            values,
+            1e-12
+        )
+
+        total = values.sum()
+
+        if total <= 0:
+            return np.ones(
+                len(values)
+            ) / len(values)
+
+        return values / total
