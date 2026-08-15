@@ -27,7 +27,11 @@ return {
 
     "samples":
 
-        len(self.X)
+        len(self.X),
+
+    "cost_score":
+
+        float(len(self.X))
 
 }
     def update_global_model(
