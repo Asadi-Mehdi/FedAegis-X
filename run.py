@@ -149,3 +149,75 @@ print("=" * 40)
 print("Training Finished")
 
 print("=" * 40)
+
+from fedaegis.cost.matrix import CostMatrix
+from fedaegis.cost.metrics import CostMetrics
+from fedaegis.evaluation.report import EvaluationReport
+
+matrix = CostMatrix(
+
+    false_positive=1,
+
+    false_negative=10
+
+)
+
+prediction = global_model.predict(
+
+    X_test
+
+)
+
+total_cost = CostMetrics.total_cost(
+
+    y_test,
+
+    prediction,
+
+    matrix
+
+)
+
+fnr = CostMetrics.false_negative_rate(
+
+    y_test,
+
+    prediction
+
+)
+
+report = EvaluationReport()
+
+report.add(
+
+    "total_cost",
+
+    float(total_cost)
+
+)
+
+report.add(
+
+    "false_negative_rate",
+
+    float(fnr)
+
+)
+
+report.save(
+
+    "outputs/cost_report.json"
+
+)
+
+print(
+
+    f"Total Cost : {total_cost:.2f}"
+
+)
+
+print(
+
+    f"FNR        : {fnr:.4f}"
+
+)
