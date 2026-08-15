@@ -2,7 +2,6 @@ from dataclasses import dataclass
 
 
 @dataclass
-
 class ClientReport:
 
     client_id: int
