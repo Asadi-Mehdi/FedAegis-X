@@ -47,3 +47,35 @@ return {
             X):
 
         return self.model.predict(X)
+from fedaegis.core.client_report import ClientReport
+from fedaegis.trust.reliability import ReliabilityCalculator
+
+class_balance = 1.0
+
+fnr = 0.0
+
+reliability = ReliabilityCalculator.calculate(
+
+    fnr,
+
+    len(self.X),
+
+    class_balance
+
+)
+
+return ClientReport(
+
+    client_id=self.client_id,
+
+    samples=len(self.X),
+
+    fnr=fnr,
+
+    class_balance=class_balance,
+
+    reliability=reliability,
+
+    parameters=self.model.get_parameters()
+
+)
