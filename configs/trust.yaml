@@ -1,0 +1,7 @@
+trust:
+
+  alpha: 0.45
+
+  beta: 0.35
+
+  gamma: 0.20
