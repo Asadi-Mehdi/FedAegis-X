@@ -9,8 +9,8 @@ dataset:
 federated:
   clients: 5
   rounds: 3
-  aggregation:
-    type: "fedavg"
+ aggregation:
+    type: "dynamic_cost"
 
 model:
   type: "logistic_regression"
